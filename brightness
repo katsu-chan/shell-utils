@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# Deps: coreutils findutils
+
 find /sys/class/backlight/ -maxdepth 2 -follow -type f -name \*br\* -printf " %p: " -exec cat {} \; 2>/dev/null
 
 #echo max brightness: $(cat /sys/class/backlight/amdgpu_bl0/max_brightness) 
