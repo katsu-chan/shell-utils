@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+find /sys/class/backlight/ -maxdepth 2 -follow -type f -name \*br\* -printf " %p: " -exec cat {} \; 2>/dev/null
+
+#echo max brightness: $(cat /sys/class/backlight/amdgpu_bl0/max_brightness) 
+#echo current: $(cat /sys/class/backlight/amdgpu_bl0/brightness)
+
+if [ ! -z "$2" ]; then
+	tee /sys/class/backlight/"$2"/brightness <<< $1
+	exit 0
+fi
+
+#if $2 == Null and $1 != null
+if [ ! -z "$1" ]; then
+	find /sys/class/backlight/ -maxdepth 2 -follow -type f -name brightness -printf " tee %p <<< " -exec "tee" "{}" <<< "$1" \; 2>/dev/null
+	exit 0
+fi
+
+#if no arguments: pass
