@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Deps: grim slurp wl-clipboard
+# sudo pacman -S grim slurp wl-clipboard
+
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        fs) FS=1
+            ;;
+        s) S=1
+            ;;
+    esac
+    shift
+done
+
+case "$FS" in
+    1) CMD="grim"
+	;;
+    *) CMD="slurp | grim -g -"
+    	;;
+esac
+
+if [ ! "$S" == 1 ]; then
+    CMD="$CMD - | wl-copy"
+fi
+
+eval "$CMD"
+
+exit 0
